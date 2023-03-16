@@ -3,9 +3,9 @@ const mongoose = require('mongoose')
 
 const Post = require('../../models/Post')
 const Category = require('../../models/Category')
-// const Image = require('../../models/Image')
 
 const validateAuth = require('../../util/authValidation')
+const {validateFormInput} = require('../../util/formValidation')
 
 const cloudinary = require('cloudinary').v2
 
@@ -51,26 +51,17 @@ module.exports = {
         createPost: async (_, {postInput: {title, content, category, image}}, context) => {
             const user = validateAuth(context)
 
+            // validate form 
+            if (title.trim() === '' || content.trim() === '' || category === '' || image.trim() === '') {
+                throw new Error('Post title, content, category, and image must not be empty')
+            }
+
             // destructuring image 
             // const { createReadStream, filename, mimetype } = await image
 
-            if(title.trim() === '') {
-                throw new Error('Title cannot be empty')
-            }
-            if(content.trim() === '') {
-                throw new Error('Content cannot be empty')
-            }
-            if(category === '') {
-                throw new Error('Pick a category')
-            }
-
-            if (image === '') {
-                throw new Error('Image is required')
-            }
-
             if (!mongoose.Types.ObjectId.isValid(category)) {
                 throw new Error('Invalid category ID');
-              }
+            }
 
             const cat = await Category.findById(category)
 
