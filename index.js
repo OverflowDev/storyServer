@@ -24,7 +24,8 @@ async function startServer(){
 
     const apolloServer = new ApolloServer({
         typeDefs,
-        resolvers
+        resolvers,
+        uploads: false
     })
 
     // start apolloServers

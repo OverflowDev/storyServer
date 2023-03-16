@@ -1,8 +1,6 @@
 
 const typeDefs = `
 
-    scalar Upload
-
     type Category {
         id: ID!
         name: String!
@@ -14,6 +12,7 @@ const typeDefs = `
         content: String!
         username: String!
         category: String!
+        imageUrl: String!
         createdAt: String!
     }
 
@@ -28,6 +27,7 @@ const typeDefs = `
         title: String!
         content: String!
         category: ID!
+        image: String!
     }
 
     input RegisterInput {
@@ -35,6 +35,8 @@ const typeDefs = `
         password: String!
         confirmPassword: String!
     }
+
+    scalar Upload
 
     type Query {
 
@@ -53,6 +55,7 @@ const typeDefs = `
 
         createPost(postInput: PostInput): Post!
         deletePost(postId: ID!): Post!
+
     }
 
 `

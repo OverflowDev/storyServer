@@ -9,7 +9,7 @@ const connectDB = async () => {
             useUnifiedTopology: true, 
             useNewUrlParser: true
         })
-        console.log(`MongoDB Connected to Quotee Database: ${conn.connection.host}`);
+        console.log(`MongoDB Connected to Story Database: ${conn.connection.host}`);
     } catch (error) {
         console.log(`Error: ${error.message}`)
         process.exit(1)

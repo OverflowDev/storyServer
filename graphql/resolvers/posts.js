@@ -48,8 +48,11 @@ module.exports = {
 
     Mutation: {
 
-        createPost: async (_, {postInput: {title, content, category}}, context) => {
+        createPost: async (_, {postInput: {title, content, category, image}}, context) => {
             const user = validateAuth(context)
+
+            // destructuring image 
+            // const { createReadStream, filename, mimetype } = await image
 
             if(title.trim() === '') {
                 throw new Error('Title cannot be empty')
@@ -61,60 +64,53 @@ module.exports = {
                 throw new Error('Pick a category')
             }
 
+            if (image === '') {
+                throw new Error('Image is required')
+            }
+
             if (!mongoose.Types.ObjectId.isValid(category)) {
                 throw new Error('Invalid category ID');
               }
 
             const cat = await Category.findById(category)
 
-            const newPost = new Post({
-                title,
-                content,
-                category: cat.name,
-                user: user.id,
-                username: user.username,
-                createdAt: new Date().toISOString()
-            })
-            const post = await newPost.save()
+            // const stream = createReadStream()
 
-            return post
-            // if (!image) {
-            //     throw new Error('Image is required')
+            // const allowedTypes = ['image/jpeg', 'image/png'];
+            // if (!allowedTypes.includes(mimetype)) {
+            //     throw new Error(`Invalid file type. Allowed types are: ${allowedTypes.join(', ')}`);
             // }
 
-            // destructuring image 
-            // const { filename, createReadStream } = await image
-
-            // try {
-            //     const stream = createReadStream()
-            //     const result = await new Promise((resolve, reject) => {
-            //         const cloudinaryStream = cloudinary.uploader.upload_stream(
-            //             {folder: 'posts'},
-            //             (error, result) => {
-            //                 if(error) reject(error)
-            //                 else resolve(result)
-            //             }
-            //         )
-            //         stream.pipe(cloudinaryStream)
-            //     })
-    
-            //     const newPost = new Post({
-            //         title,
-            //         content,
-            //         category,
-            //         // imageUrl: result.secure_url,
-            //         user: user.id,
-            //         username: user.username,
-            //         createdAt: new Date().toISOString()
-            //     })
-            //     const post = await newPost.save()
-    
-            //     return post
-
-            // } catch (error) {
-            //     throw new Error('Error uploading images')
+            // const maxSize = 10 * 1024 * 1024; // 10 MB
+            // if (stream.bytesRead > maxSize) {
+            //     throw new Error(`File size exceeds maximum limit of ${maxSize / (1024 * 1024)} MB`);
             // }
 
+            const uploadOptions = {
+                folder: 'posts',
+                resource_type: 'auto',
+              };
+
+            try {
+                const res = await cloudinary.uploader.upload(image, uploadOptions)
+
+                const newPost = new Post({
+                    title,
+                    content,
+                    username: user.username,
+                    category: cat.name,
+                    imageUrl: (await res).secure_url,
+                    user: user.id,
+                    createdAt: new Date().toISOString()
+                })
+
+                const post = await newPost.save()
+                return post
+
+            } catch (error) {
+                console.error(error);
+                throw new Error('Failed to upload file to Cloudinary');
+            }
 
         },
 
