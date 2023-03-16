@@ -80,8 +80,11 @@ module.exports = {
                 })
             }
 
+            // Convert the username to lowercase to ensure case-insensitive matching
+            const lowercaseUsername = username.toLowerCase()
+
             // check if user exist 
-            const user = await User.findOne({username})
+            const user = await User.findOne({username: lowercaseUsername})
 
             if(!user) {
                 errors.general = 'User not found'
