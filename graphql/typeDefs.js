@@ -12,6 +12,7 @@ const typeDefs = `
         content: String!
         chapter: String!
         name: String!
+        username: String!
         category: String!
         imageUrl: String!
         createdAt: String!
