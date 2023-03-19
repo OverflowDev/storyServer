@@ -12,6 +12,7 @@ const {validateRegisterInput, validateLoginInput} = require('../../util/userVali
 const generateToken = (user) => {
     return jwt.sign({
         id: user.id,
+        name: user.name,
         username: user.username,
     }, process.env.SECRET_KEY, {expiresIn: '5h'})
 }
