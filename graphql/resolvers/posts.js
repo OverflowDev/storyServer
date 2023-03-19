@@ -89,7 +89,7 @@ module.exports = {
                     title,
                     content,
                     chapter,
-                    username: user.username,
+                    name: user.name,
                     category: cat.name,
                     imageUrl: (await res).secure_url,
                     user: user.id,
