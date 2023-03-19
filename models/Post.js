@@ -17,19 +17,19 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    name: {
-        type: String,
-        required: true
-    },
-    category: {
-        type: String,
-        required: true
-    },
     imageUrl: {
         type: String,
         required: true
     },
     createdAt: {
+        type: String,
+        required: true
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    category: {
         type: String,
         required: true
     },

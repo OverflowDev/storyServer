@@ -11,9 +11,9 @@ const typeDefs = `
         title: String!
         content: String!
         chapter: String!
+        category: String!
         name: String!
         username: String!
-        category: String!
         imageUrl: String!
         createdAt: String!
     }
