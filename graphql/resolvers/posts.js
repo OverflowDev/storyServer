@@ -48,12 +48,12 @@ module.exports = {
 
     Mutation: {
 
-        createPost: async (_, {postInput: {title, content, category, image}}, context) => {
+        createPost: async (_, {postInput: {title, content, chapter, category, image}}, context) => {
             const user = validateAuth(context)
 
             // validate form 
-            if (title.trim() === '' || content.trim() === '' || category === '' || image.trim() === '') {
-                throw new Error('Post title, content, category, and image must not be empty')
+            if (title.trim() === '' || content.trim() === '' || category === '' || chapter === '' || image.trim() === '') {
+                throw new Error('Post title, content, category, chapter and image must not be empty')
             }
 
             // destructuring image 
@@ -88,6 +88,7 @@ module.exports = {
                 const newPost = new Post({
                     title,
                     content,
+                    chapter,
                     username: user.username,
                     category: cat.name,
                     imageUrl: (await res).secure_url,

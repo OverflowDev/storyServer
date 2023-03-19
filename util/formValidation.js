@@ -3,6 +3,7 @@ const mongoose = require('mongoose')
 module.exports.validateFormInput = (
     title,
     content,
+    chapter,
     category,
     image
 ) => {
@@ -14,6 +15,10 @@ module.exports.validateFormInput = (
 
     if(content.trim() === '') {
         errors.content = 'Content must not be empty'
+    }
+
+    if(chapter.trim() === '') {
+        errors.chapter = 'Chapter must not be empty'
     }
 
     if(category === '') {

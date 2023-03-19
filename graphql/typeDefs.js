@@ -10,6 +10,7 @@ const typeDefs = `
         id: ID!
         title: String!
         content: String!
+        chapter: String!
         username: String!
         category: String!
         imageUrl: String!
@@ -18,6 +19,7 @@ const typeDefs = `
 
     type User {
         id: ID!
+        name: String!
         username: String!
         token: String!
         createdAt: String!
@@ -26,11 +28,13 @@ const typeDefs = `
     input PostInput {
         title: String!
         content: String!
+        chapter: String!
         category: ID!
         image: String!
     }
 
     input RegisterInput {
+        name: String!
         username: String!
         password: String!
         confirmPassword: String!
