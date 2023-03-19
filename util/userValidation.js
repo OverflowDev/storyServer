@@ -12,6 +12,11 @@ module.exports.validateRegisterInput = (
 
     if(username.trim() === '') {
         errors.username = 'Username must not be empty'
+    }else {
+        const hasSpace = username.indexOf(' ') !== -1;
+        if (hasSpace) {
+        errors.username = 'Username cannot contain spaces';
+        }
     }
 
     if(password === ''){
