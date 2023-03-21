@@ -21,7 +21,7 @@ module.exports = {
     Mutation: {
         register: async (_, {registerInput: {username, password, confirmPassword}}) => {
 
-            const {errors, valid} = validateRegisterInput(name, username, password, confirmPassword)
+            const {errors, valid} = validateRegisterInput(username, password, confirmPassword)
 
             if(!valid) {
                 throw new GraphQLError('Errors', {
