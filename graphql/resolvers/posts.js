@@ -48,11 +48,11 @@ module.exports = {
 
     Mutation: {
 
-        createPost: async (_, {postInput: {title, content, chapter, category, image}}, context) => {
+        createPost: async (_, {postInput: {title, content, chapter, category, author, image}}, context) => {
             const user = validateAuth(context)
 
             // validate form 
-            if (title.trim() === '' || content.trim() === '' || category === '' || chapter === '' || image.trim() === '') {
+            if (title.trim() === '' || content.trim() === '' || category === '' || author === '' || chapter === '' || image.trim() === '') {
                 throw new Error('Post title, content, category, chapter and image must not be empty')
             }
 
@@ -89,8 +89,8 @@ module.exports = {
                     title,
                     content,
                     chapter,
+                    author,
                     username: user.username,
-                    name: user.name,
                     category: cat.name,
                     imageUrl: (await res).secure_url,
                     user: user.id,

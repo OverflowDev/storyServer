@@ -11,16 +11,15 @@ const typeDefs = `
         title: String!
         content: String!
         chapter: String!
+        author: String!
         category: String!
-        name: String!
-        username: String!
         imageUrl: String!
+        username: String!
         createdAt: String!
     }
 
     type User {
         id: ID!
-        name: String!
         username: String!
         token: String!
         createdAt: String!
@@ -30,12 +29,12 @@ const typeDefs = `
         title: String!
         content: String!
         chapter: String!
+        author: String!
         category: ID!
         image: String!
     }
 
     input RegisterInput {
-        name: String!
         username: String!
         password: String!
         confirmPassword: String!

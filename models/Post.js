@@ -25,9 +25,9 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    name: {
+    author: {
         type: String,
-        required: true
+        required: true 
     },
     category: {
         type: String,

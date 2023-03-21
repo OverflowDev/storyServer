@@ -4,6 +4,7 @@ module.exports.validateFormInput = (
     title,
     content,
     chapter,
+    author,
     category,
     image
 ) => {
@@ -18,6 +19,10 @@ module.exports.validateFormInput = (
     }
 
     if(chapter.trim() === '') {
+        errors.chapter = 'Chapter must not be empty'
+    }
+
+    if(author.trim() === '') {
         errors.chapter = 'Chapter must not be empty'
     }
 

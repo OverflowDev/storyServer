@@ -12,7 +12,6 @@ const {validateRegisterInput, validateLoginInput} = require('../../util/userVali
 const generateToken = (user) => {
     return jwt.sign({
         id: user.id,
-        name: user.name,
         username: user.username,
     }, process.env.SECRET_KEY, {expiresIn: '5h'})
 }
@@ -20,7 +19,7 @@ const generateToken = (user) => {
 module.exports = {
 
     Mutation: {
-        register: async (_, {registerInput: {name, username, password, confirmPassword}}) => {
+        register: async (_, {registerInput: {username, password, confirmPassword}}) => {
 
             const {errors, valid} = validateRegisterInput(name, username, password, confirmPassword)
 
@@ -32,9 +31,13 @@ module.exports = {
                     }
                 })
             }
+            
+             // Convert the username to lowercase to ensure case-insensitive matching
+             const lowercaseUsername = username.toLowerCase()
 
-            // Check if user exist 
-            const usernameExist = await User.findOne({username})
+             // check if user exist 
+             const usernameExist = await User.findOne({username: lowercaseUsername})
+
             if(usernameExist) {
                 throw new GraphQLError('Errors', {
                     extensions: {
@@ -51,7 +54,6 @@ module.exports = {
 
             // create a new user 
             const newUser = new User({
-                name,
                 username,
                 password,
                 createdAt: new Date().toISOString()
